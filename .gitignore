@@ -1,3 +1,10 @@
+# OUR OUTPUT FILE
+*.rng
+
+# Emacs junk
+*~
+*#
+
 # Object files
 *.o
 *.ko
