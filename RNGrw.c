@@ -26,7 +26,7 @@ int main(){
   }
   
   
-  char fileName[] = "kappa.rng";
+  char fileName[] = "kappa.txt";
   printf("\nWriting to %s...\n", fileName);
   int fd = open(fileName, O_CREAT | O_WRONLY, 0666);
   write( fd, numsToWrite, 10*sizeof(int) );
@@ -35,6 +35,14 @@ int main(){
   
   printf("\nReading from %s...\n", fileName);
   //stuff here
+  int reading = open(fileName, O_RDONLY, 0666);
+  int numsToRead[10];
+  read( reading, numsToRead, 10*sizeof(int));
 
+  printf("\nPrinting out from %s... \n",fileName);
+  for( i = 0; i < 10; i++){
+    printf( "random %d: %u\n", i, numsToRead[i]);
+  }
+  close(reading);
   return 0;
 }  
