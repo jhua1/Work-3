@@ -2,44 +2,45 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <sys/stat.h>
+#include <string.h>
 
-unsigned int genRandInt(){
-  unsigned int ret;
-  int fd = open("/dev/random", O_RDONLY, 0666);
-  read(fd, &ret, 4);
+int genRandInt(){
+  int ret;
+  int fd = open("/dev/random", O_RDONLY);
+  int x = read(fd, &ret, 4);
   close(fd);
   return ret;
 }
 
 
 int main(){
-  umask(000);
 
   printf("Generating random numbers: \n");
   int numsToWrite[10];
   int i;
   for (i = 0; i < 10; i++) {
-    unsigned int newRandInt = genRandInt();
+    int newRandInt = genRandInt();
     printf("random %d: %u\n", i, newRandInt);
-    numsToWrite[i] = genRandInt();
+    numsToWrite[i] = newRandInt;
   }
   
   
-  char fileName[] = "kappa.txt";
-  printf("\nWriting to %s...\n", fileName);
-  int fd = open(fileName, O_CREAT | O_WRONLY, 0666);
-  write( fd, numsToWrite, 10*sizeof(int) );
+  char fileName[] = "kappa";
+  printf("\nWriting to %s...\n", "kappa");
+  int fd = open(fileName, O_CREAT | O_WRONLY, 0644);
+  int no = write( fd, numsToWrite, 10*sizeof(int) );
+  printf("\n -1 or 40?!?!?!: %d\n", no);
   close(fd);
 
   
-  printf("\nReading from %s...\n", fileName);
+  printf("\nReading from %s...\n", "kappa");
   //stuff here
-  int reading = open(fileName, O_RDONLY, 0666);
+  int reading = open(fileName, O_RDONLY);
   int numsToRead[10];
-  read( reading, numsToRead, 10*sizeof(int));
-
-  printf("\nPrinting out from %s... \n",fileName);
+  
+  int yes = read( reading, numsToRead, 10*sizeof(int));
+  printf("\n -1 or 40?!?!?!: %d\n", yes);
+  printf("\nPrinting out from %s... \n","kappa");
   for( i = 0; i < 10; i++){
     printf( "random %d: %u\n", i, numsToRead[i]);
   }

@@ -8,4 +8,4 @@ run: make
 clean:
 	rm -rf *~
 	rm rngesus.out
-	rm kappa.txt
+	rm kappa
